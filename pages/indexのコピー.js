@@ -1,42 +1,10 @@
-import styles from '../styles/Home.module.css'
-import { useState, useEffect} from 'react';
-import Link from 'next/link';
-import { DataStore } from '@aws-amplify/datastore';
-import { Post } from '../models';
-
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-const inter = Inter({ subsets: ['latin'] });
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [posts, setPosts] = useState([])
-  useEffect(() => {
-    fetchPosts();
-    async function fetchPosts() {
-      const postData = await DataStore.query(Post);
-      setPosts(postData);
-    }
-    DataStore.observe(Post).subscribe(()  => {
-      fetchPosts();
-    });
-  }, [])
   return (
-    <div className={styles.container}>
-      <h1>投稿リスト</h1>
-      {
-        posts.map(post => (
-          <Link key={post.id} href={`/posts/${post.id}`}>
-            <h2>{post.title}</h2>
-          </Link>
-        ))
-      }
-    </div>
-  )
-}
-
-
-/**
-
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
@@ -152,14 +120,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-*/
-/**
- * Unhandled Runtime Error
-Error: Failed prop type: The prop `href` expects a `string` or `object` in `<Link>`,
- but got `undefined` instead.
-<Link to={`/posts/${post.id}`}>
-  <h2>{post.title}</h2>
-</Link>
-↓
-<Link href="/about">About Us</Link>
-*/
+  )
+}
